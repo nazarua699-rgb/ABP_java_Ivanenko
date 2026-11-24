@@ -1,0 +1,658 @@
+ticket2
+// Розробити додаток із двох форм. Форма 1 приймає рядок.
+Якщо це текст, порахувати кількість голосних літер англійської мови.
+Форма 2 відображає Квадрат червоного кольору (50% прозорості).
+Його розмір вираховується за формулою функції.
+import javax.swing.*;
+import java.awt.*;
+
+public class Task2 extends JFrame {
+    private JTextField inputField;
+
+    public Task20() {
+        setTitle("Білет 2: Форма 1 (Введення)");
+        setSize(400, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
+
+        inputField = new JTextField(20);
+        JButton btnCalc = new JButton("Обчислити");
+
+        add(new JLabel("Вхідні дані:"));
+        add(inputField);
+        add(btnCalc);
+
+        btnCalc.addActionListener(e -> {
+            String text = inputField.getText().trim();
+            if (!text.isEmpty()) {
+                new ResultForm20(text).setVisible(true);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Task20().setVisible(true));
+    }
+}
+
+class ResultForm20 extends JFrame {
+    private String inputData;
+    private double fResult;
+    private int shapeSize;
+
+    public ResultForm20(String data) {
+        this.inputData = data;
+        setTitle("Білет 20: Форма 2 (Результат)");
+        setSize(500, 550);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        calculateFunction();
+
+
+        shapeSize = Math.abs((int) fResult % 20) * 10;
+        if (shapeSize == 0) shapeSize = 20;
+
+        JPanel drawPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+
+                g2d.setColor(new Color(255, 0, 0, 128));
+
+                int x = (getWidth() - shapeSize) / 2;
+                int y = (getHeight() - shapeSize) / 2;
+                g2d.fillRect(x, y, shapeSize, shapeSize);
+            }
+        };
+
+        JLabel resultLabel = new JLabel("Значення f(x) = " + fResult, SwingConstants.CENTER);
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        resultLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        add(drawPanel, BorderLayout.CENTER);
+        add(resultLabel, BorderLayout.SOUTH);
+    }
+
+    private void calculateFunction() {
+        try {
+            if (inputData.contains(".") || inputData.contains(",")) {
+
+                double x = Double.parseDouble(inputData.replace(",", "."));
+                if (Math.sin(x) == 0) throw new ArithmeticException("Ділення на нуль (sin(x) = 0)");
+                fResult = Math.floor(Math.exp(1.0 / Math.sin(x))) % 302;
+            } else {
+                try {
+                    int val = Integer.parseInt(inputData);
+                    if (val >= 0) {
+
+                        fResult = factorial(val) % 202;
+                    } else {
+
+                        fResult = (Math.abs(val) * 7 + Math.pow(val, 3)) % 202;
+                    }
+                } catch (NumberFormatException e) {
+
+                    fResult = inputData.toLowerCase().replaceAll("[^aeiouy]", "").length();
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Помилка: " + ex.getMessage(), "Помилка", JOptionPane.ERROR_MESSAGE);
+            fResult = 0;
+        }
+    }
+
+    private double factorial(int n) {
+        double res = 1;
+        for (int i = 1; i <= n; i++) res *= i;
+        return res;
+    }
+}
+ticket13
+//Розробити додаток із двох форм.
+Якщо введено текст, порахувати кількість слів довжиною від 4 до 7 літер.
+Форма 2 малює за точками зафарбований Рівносторонній трикутник червоного кольору (50% прозорості).
+import javax.swing.*;
+import java.awt.*;
+
+public class Task13 extends JFrame {
+    private JTextField inputField;
+
+    public Task13() {
+        setTitle("Білет 13: Форма 1 (Введення)");
+        setSize(400, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
+
+        inputField = new JTextField(20);
+        JButton btnCalc = new JButton("Обчислити");
+
+        add(new JLabel("Вхідні дані:"));
+        add(inputField);
+        add(btnCalc);
+
+        btnCalc.addActionListener(e -> {
+            String text = inputField.getText().trim();
+            if (!text.isEmpty()) {
+                new ResultForm13(text).setVisible(true);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Task13().setVisible(true));
+    }
+}
+
+class ResultForm13 extends JFrame {
+    private String inputData;
+    private double fResult;
+    private int shapeSize;
+
+    public ResultForm13(String data) {
+        this.inputData = data;
+        setTitle("Білет 13: Форма 2 (Результат)");
+        setSize(500, 550);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        calculateFunction();
+
+        shapeSize = Math.abs((int) fResult % 20) * 10;
+        if (shapeSize == 0) shapeSize = 30;
+
+        JPanel drawPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                g2d.setColor(new Color(255, 0, 0, 128));
+
+                int centerX = getWidth() / 2;
+                int centerY = getHeight() / 2;
+                int h = (int) (shapeSize * Math.sqrt(3) / 2);
+
+                int[] xPoints = { centerX, centerX - shapeSize / 2, centerX + shapeSize / 2 };
+                int[] yPoints = { centerY - h / 2, centerY + h / 2, centerY + h / 2 };
+
+                g2d.fillPolygon(xPoints, yPoints, 3);
+            }
+        };
+
+        JLabel resultLabel = new JLabel("Значення f(x) = " + fResult, SwingConstants.CENTER);
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        resultLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        add(drawPanel, BorderLayout.CENTER);
+        add(resultLabel, BorderLayout.SOUTH);
+    }
+
+    private void calculateFunction() {
+        try {
+            if (inputData.contains(".") || inputData.contains(",")) {
+                double x = Double.parseDouble(inputData.replace(",", "."));
+                if (x <= 0) throw new ArithmeticException("Логарифм від від'ємного числа або нуля!");
+                double log2 = Math.log(x) / Math.log(2);
+                if (Math.sin(log2) == 0) throw new ArithmeticException("Ділення на нуль (sin(log2(x)) = 0)");
+                fResult = Math.abs(1.0 / Math.sin(log2)) % 313;
+            } else {
+                try {
+                    int val = Integer.parseInt(inputData);
+                    if (val >= 0) {
+                        fResult = (Math.pow(2, val) + Math.pow(val, 2)) % 113;
+                    } else {
+                        fResult = (Math.pow(val, 7) + val - 1) % 213;
+                    }
+                } catch (NumberFormatException e) {
+
+                    String[] words = inputData.split("\\s+");
+                    int count = 0;
+                    for (String w : words) {
+                        int len = w.replaceAll("[^a-zA-Zа-яА-Я]", "").length();
+                        if (len >= 4 && len <= 7) count++;
+                    }
+                    fResult = count;
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Помилка: " + ex.getMessage(), "Помилка", JOptionPane.ERROR_MESSAGE);
+            fResult = 0;
+        }
+    }
+}
+ticket1
+Розробити додаток із двох форм.
+Якщо введено текст, порахувати кількість слів довжиною від 2 до 6 літер.
+Форма 2 відображає зафарбоване Коло синього кольору (без прозорості).
+import javax.swing.*;
+import java.awt.*;
+
+public class Task1 extends JFrame {
+    private JTextField inputField;
+
+    public Task1() {
+        setTitle("Білет 1: Форма 1 (Введення)");
+        setSize(400, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
+
+        inputField = new JTextField(20);
+        JButton btnCalc = new JButton("Обчислити");
+
+        add(new JLabel("Вхідні дані:"));
+        add(inputField);
+        add(btnCalc);
+
+        btnCalc.addActionListener(e -> {
+            String text = inputField.getText().trim();
+            if (!text.isEmpty()) {
+                new ResultForm1(text).setVisible(true);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Task1().setVisible(true));
+    }
+}
+
+class ResultForm1 extends JFrame {
+    private String inputData;
+    private double fResult;
+    private int shapeSize;
+
+    public ResultForm1(String data) {
+        this.inputData = data;
+        setTitle("Білет 1: Форма 2 (Результат)");
+        setSize(500, 550);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        calculateFunction();
+
+        shapeSize = Math.abs((int) fResult % 20) * 10;
+        if (shapeSize == 0) shapeSize = 20;
+
+        JPanel drawPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                g2d.setColor(Color.BLUE);
+
+                int x = (getWidth() - shapeSize) / 2;
+                int y = (getHeight() - shapeSize) / 2;
+                g2d.fillOval(x, y, shapeSize, shapeSize);
+            }
+        };
+
+        JLabel resultLabel = new JLabel("Значення f(x) = " + fResult, SwingConstants.CENTER);
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        resultLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        add(drawPanel, BorderLayout.CENTER);
+        add(resultLabel, BorderLayout.SOUTH);
+    }
+
+    private void calculateFunction() {
+        try {
+            if (inputData.contains(".") || inputData.contains(",")) {
+                double x = Double.parseDouble(inputData.replace(",", "."));
+                if (x <= 0) throw new ArithmeticException("Логарифм від від'ємного числа або нуля!");
+                double log2 = Math.log(x) / Math.log(2);
+                if (Math.sin(log2) == 0) throw new ArithmeticException("Ділення на нуль (sin(log2(x)) = 0)");
+                fResult = Math.abs(1.0 / Math.sin(log2)) % 301;
+            } else {
+                try {
+                    int val = Integer.parseInt(inputData);
+                    if (val >= 0) {
+                        fResult = (Math.pow(2, val) + Math.pow(val, 2)) % 101;
+                    } else {
+                        fResult = (Math.pow(val, 3) + val - 1) % 201;
+                    }
+                } catch (NumberFormatException e) {
+
+                    String[] words = inputData.split("\\s+");
+                    int count = 0;
+                    for (String w : words) {
+                        int len = w.replaceAll("[^a-zA-Zа-яА-Я]", "").length();
+                        if (len >= 2 && len <= 6) count++;
+                    }
+                    fResult = count;
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Помилка: " + ex.getMessage(), "Помилка", JOptionPane.ERROR_MESSAGE);
+            fResult = 0;
+        }
+    }
+}
+tickrt17
+Розробити додаток із двох форм.
+Якщо введено текст, порахувати кількість голосних літер англійської мови.
+Форма 2 відображає зафарбоване Коло синього кольору (50% прозорості).
+import javax.swing.*;
+import java.awt.*;
+
+public class Task17 extends JFrame {
+    private JTextField inputField;
+
+    public Task17() {
+        setTitle("Білет 17: Форма 1 (Введення)");
+        setSize(400, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
+
+        inputField = new JTextField(20);
+        JButton btnCalc = new JButton("Обчислити");
+
+        add(new JLabel("Вхідні дані:"));
+        add(inputField);
+        add(btnCalc);
+
+        btnCalc.addActionListener(e -> {
+            String text = inputField.getText().trim();
+            if (!text.isEmpty()) {
+                new ResultForm17(text).setVisible(true);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Task17().setVisible(true));
+    }
+}
+
+class ResultForm17 extends JFrame {
+    private String inputData;
+    private double fResult;
+    private int shapeSize;
+
+    public ResultForm17(String data) {
+        this.inputData = data;
+        setTitle("Білет 17: Форма 2 (Результат)");
+        setSize(500, 550);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        calculateFunction();
+
+        shapeSize = Math.abs((int) fResult % 20) * 10;
+        if (shapeSize == 0) shapeSize = 20;
+
+        JPanel drawPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                g2d.setColor(new Color(0, 0, 255, 128));
+
+                int x = (getWidth() - shapeSize) / 2;
+                int y = (getHeight() - shapeSize) / 2;
+                g2d.fillOval(x, y, shapeSize, shapeSize);
+            }
+        };
+
+        JLabel resultLabel = new JLabel("Значення f(x) = " + fResult, SwingConstants.CENTER);
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        resultLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        add(drawPanel, BorderLayout.CENTER);
+        add(resultLabel, BorderLayout.SOUTH);
+    }
+
+    private void calculateFunction() {
+        try {
+            if (inputData.contains(".") || inputData.contains(",")) {
+                double x = Double.parseDouble(inputData.replace(",", "."));
+                if (x == -317) throw new ArithmeticException("Ділення на нуль (x + 317 = 0)");
+                fResult = x / (x + 317);
+            } else {
+                try {
+                    int val = Integer.parseInt(inputData);
+                    if (val >= 0) {
+                        fResult = Math.sin(5 * val + 117);
+                    } else {
+                        if (val == 0) throw new ArithmeticException("Логарифм від нуля!");
+                        fResult = (Math.log(Math.abs(val)) / Math.log(2)) + 217;
+                    }
+                } catch (NumberFormatException e) {
+                    fResult = inputData.toLowerCase().replaceAll("[^aeiouy]", "").length();
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Помилка: " + ex.getMessage(), "Помилка", JOptionPane.ERROR_MESSAGE);
+            fResult = 0;
+        }
+    }
+}
+ticket18
+Розробити додаток із двох форм.
+Якщо введено текст, порахувати кількість слів довжиною від 2 до 6 літер.
+ Форма 2 відображає зафарбоване Коло зеленого кольору (без прозорості).
+import javax.swing.*;
+import java.awt.*;
+
+public class Task18 extends JFrame {
+    private JTextField inputField;
+
+    public Task18() {
+        setTitle("Білет 18: Форма 1 (Введення)");
+        setSize(400, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
+
+        inputField = new JTextField(20);
+        JButton btnCalc = new JButton("Обчислити");
+
+        add(new JLabel("Вхідні дані:"));
+        add(inputField);
+        add(btnCalc);
+
+        btnCalc.addActionListener(e -> {
+            String text = inputField.getText().trim();
+            if (!text.isEmpty()) {
+                new ResultForm18(text).setVisible(true);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Task18().setVisible(true));
+    }
+}
+
+class ResultForm18 extends JFrame {
+    private String inputData;
+    private double fResult;
+    private int shapeSize;
+
+    public ResultForm18(String data) {
+        this.inputData = data;
+        setTitle("Білет 18: Форма 2 (Результат)");
+        setSize(500, 550);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        calculateFunction();
+
+        shapeSize = Math.abs((int) fResult % 20) * 10;
+        if (shapeSize == 0) shapeSize = 20;
+
+        JPanel drawPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                g2d.setColor(Color.GREEN);
+
+                int x = (getWidth() - shapeSize) / 2;
+                int y = (getHeight() - shapeSize) / 2;
+                g2d.fillOval(x, y, shapeSize, shapeSize);
+            }
+        };
+
+        JLabel resultLabel = new JLabel("Значення f(x) = " + fResult, SwingConstants.CENTER);
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        resultLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        add(drawPanel, BorderLayout.CENTER);
+        add(resultLabel, BorderLayout.SOUTH);
+    }
+
+    private void calculateFunction() {
+        try {
+            if (inputData.contains(".") || inputData.contains(",")) {
+                double x = Double.parseDouble(inputData.replace(",", "."));
+                if (x <= 0) throw new ArithmeticException("Логарифм від від'ємного числа чи нуля!");
+                double log2 = Math.log(x) / Math.log(2);
+                if (Math.sin(log2) == 0) throw new ArithmeticException("Ділення на нуль (sin(log2(x)) = 0)");
+                fResult = Math.abs(1.0 / Math.sin(log2)) % 318;
+            } else {
+                try {
+                    int val = Integer.parseInt(inputData);
+                    if (val >= 0) {
+                        fResult = (Math.pow(2, val) + Math.pow(val, 2)) % 118;
+                    } else {
+                        fResult = (Math.pow(val, 5) + val - 1) % 218;
+                    }
+                } catch (NumberFormatException e) {
+                    String[] words = inputData.split("\\s+");
+                    int count = 0;
+                    for (String w : words) {
+                        int len = w.replaceAll("[^a-zA-Zа-яА-Я]", "").length();
+                        if (len >= 2 && len <= 6) count++;
+                    }
+                    fResult = count;
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Помилка: " + ex.getMessage(), "Помилка", JOptionPane.ERROR_MESSAGE);
+            fResult = 0;
+        }
+    }
+}
+ticket19
+Розробити додаток із двох форм.
+Якщо введено текст, порахувати кількість ВЕЛИКИХ англійських літер (A-Z).
+ Форма 2 відображає зафарбований Квадрат червоного кольору (50% прозорості).
+import javax.swing.*;
+import java.awt.*;
+
+public class Task19 extends JFrame {
+    private JTextField inputField;
+
+    public Task19() {
+        setTitle("Білет 19: Форма 1 (Введення)");
+        setSize(400, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
+
+        inputField = new JTextField(20);
+        JButton btnCalc = new JButton("Обчислити");
+
+        add(new JLabel("Вхідні дані:"));
+        add(inputField);
+        add(btnCalc);
+
+        btnCalc.addActionListener(e -> {
+            String text = inputField.getText().trim();
+            if (!text.isEmpty()) {
+                new ResultForm19(text).setVisible(true);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Task19().setVisible(true));
+    }
+}
+
+class ResultForm19 extends JFrame {
+    private String inputData;
+    private double fResult;
+    private int shapeSize;
+
+    public ResultForm19(String data) {
+        this.inputData = data;
+        setTitle("Білет 19: Форма 2 (Результат)");
+        setSize(500, 550);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        calculateFunction();
+
+        shapeSize = Math.abs((int) fResult % 20) * 10;
+        if (shapeSize == 0) shapeSize = 20;
+
+        JPanel drawPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                g2d.setColor(new Color(255, 0, 0, 128));
+
+                int x = (getWidth() - shapeSize) / 2;
+                int y = (getHeight() - shapeSize) / 2;
+                g2d.fillRect(x, y, shapeSize, shapeSize);
+            }
+        };
+
+        JLabel resultLabel = new JLabel("Значення f(x) = " + fResult, SwingConstants.CENTER);
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        resultLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        add(drawPanel, BorderLayout.CENTER);
+        add(resultLabel, BorderLayout.SOUTH);
+    }
+
+    private void calculateFunction() {
+        try {
+            if (inputData.contains(".") || inputData.contains(",")) {
+                double x = Double.parseDouble(inputData.replace(",", "."));
+                if (Math.sin(99 * x) == 0) throw new ArithmeticException("Ділення на нуль (sin(99x) = 0)");
+                fResult = Math.abs(1.0 / Math.sin(99 * x)) % 319;
+            } else {
+                try {
+                    int val = Integer.parseInt(inputData);
+                    if (val >= 0) {
+                        fResult = (factorial(val) + val - 1) % 119;
+                    } else {
+                        fResult = Math.pow(val, 5) % 219;
+                    }
+                } catch (NumberFormatException e) {
+
+                    fResult = inputData.replaceAll("[^A-Z]", "").length();
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Помилка: " + ex.getMessage(), "Помилка", JOptionPane.ERROR_MESSAGE);
+            fResult = 0;
+        }
+    }
+
+    private double factorial(int n) {
+        double res = 1;
+        for (int i = 1; i <= n; i++) res *= i;
+        return res;
+    }
+}
